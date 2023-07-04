@@ -1,5 +1,5 @@
 {
-  "name": "@ali/plugin-pha",
+  "name": "@ali/ice-plugin-pha",
   "version": "1.0.0",
   "description": "ice.js plugin for PHA.",
   "license": "MIT",
