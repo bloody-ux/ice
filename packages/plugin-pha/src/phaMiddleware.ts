@@ -25,8 +25,13 @@ const createPHAMiddleware = ({
   logger,
 }: Options): ExpressRequestHandler => {
   const phaMiddleware: ExpressRequestHandler = async (req, res, next) => {
-    // @ts-ignore
-    const requestPath = path.basename(req._parsedUrl.pathname);
+    let requestPath = path.basename(req.path);
+
+    // 支持从pha容器来的manifest请求，从而支持调试本地代码
+    const { wh_ttid, pha } = req.query;
+    if (wh_ttid === 'native' && pha === 'true') {
+        requestPath += '-manifest.json';
+    }
     const requestManifest = requestPath.endsWith('manifest.json');
 
     const requestAppWorker = req.url === '/app-worker.js';

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.0
+- feat: 本地开发环境下npm start开启的服务页面，在手淘中打开时(需要添加?pha=true查询字符串)，可以开启pha容器，从而实现快速调试开发。
+
+## 1.0.0
+
+- feat: 将包发布到内网npm
+- fix: 修复pha生成`data_prefetch`配置时错误层级导致pha data prefetch始终不生效的问题
+
 ## 3.0.0
 
 ### Major Changes
