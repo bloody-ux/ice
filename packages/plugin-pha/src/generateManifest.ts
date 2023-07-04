@@ -10,6 +10,7 @@ export interface Options {
   rootDir: string;
   outputDir: string;
   parseOptions: Partial<ParseOptions>;
+  dataLoaderUseAppWorker: boolean;
   compiler: Compiler;
   getAppConfig: GetAppConfig;
   getRoutesConfig: GetRoutesConfig;
@@ -50,6 +51,7 @@ export default async function generateManifest({
   parseOptions,
   getAllPlugin,
   getAppConfig,
+  dataLoaderUseAppWorker,
   getRoutesConfig,
   getDataloaderConfig,
   compiler,
@@ -68,13 +70,14 @@ export default async function generateManifest({
 
   let manifest = appConfig.phaManifest;
   const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
+  const entry = path.join(rootDir, './.ice/appWorker.ts');
+  const entryExists = fs.existsSync(entry);
   // TODO: PHA Worker should deal with url which load by script element.
-  if (appWorkerPath) {
+  if (appWorkerPath || (entryExists && dataLoaderUseAppWorker)) {
     manifest = rewriteAppWorker(manifest);
-    const entry = path.join(rootDir, './.ice/appWorker.ts');
 
     await getAppWorkerContent(compiler, {
-      entry: fs.existsSync(entry) ? entry : appWorkerPath,
+      entry: entryExists ? entry : appWorkerPath,
       outfile: path.join(outputDir, 'app-worker.js'),
       minify: true,
     }, getCompilerConfig({ getAllPlugin }));

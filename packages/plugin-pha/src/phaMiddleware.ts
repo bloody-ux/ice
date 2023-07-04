@@ -19,6 +19,7 @@ const createPHAMiddleware = ({
   parseOptions,
   getAllPlugin,
   getAppConfig,
+  dataLoaderUseAppWorker,
   getRoutesConfig,
   getDataloaderConfig,
   compiler,
@@ -49,7 +50,10 @@ const createPHAMiddleware = ({
 
       let manifest: Manifest = appConfig.phaManifest;
       const appWorkerPath = getAppWorkerUrl(manifest, path.join(rootDir, 'src'));
-      if (appWorkerPath) {
+      const entry = path.join(rootDir, './.ice/appWorker.ts');
+      const entryExists = fs.existsSync(entry);
+
+      if (appWorkerPath || (entryExists && dataLoaderUseAppWorker)) {
         // over rewrite appWorker.url to app-worker.js
         manifest = rewriteAppWorker(manifest);
         if (requestAppWorker) {
@@ -57,7 +61,7 @@ const createPHAMiddleware = ({
           sendResponse(
             res,
             await getAppWorkerContent(compiler, {
-              entry: fs.existsSync(entry) ? entry : appWorkerPath,
+              entry: entryExists ? entry : appWorkerPath,
               outfile: path.join(outputDir, 'app-worker.js'),
             }, getCompilerConfig({
               getAllPlugin,

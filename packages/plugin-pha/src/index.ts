@@ -118,6 +118,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
         getAppConfig,
         getRoutesConfig,
         getDataloaderConfig,
+        dataLoaderUseAppWorker: dataLoader.useAppWorker,
         parseOptions: {
           excuteServerEntry,
           publicPath,
@@ -174,6 +175,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
           getRoutesConfig,
           getAllPlugin,
           getDataloaderConfig,
+          dataLoaderUseAppWorker: dataLoader.useAppWorker,
           parseOptions: {
             publicPath,
             urlPrefix,

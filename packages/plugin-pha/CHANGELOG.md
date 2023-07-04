@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.0
+- feat: 支持更加符合常识地生成`app-worker.js`以及更新对应的manifest项更新。原本的逻辑是有了`app-worker.ts`才会生成。现在的逻辑是，只要有依赖`app-worker.js`的场景（比如dataLoader要求使用appWorker），就会生成。
+
 ## 1.1.0
 - feat: 本地开发环境下npm start开启的服务页面，在手淘中打开时(需要添加?pha=true查询字符串)，可以开启pha容器，从而实现快速调试开发。
 
