@@ -363,17 +363,19 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
 
       // Set static dataloader to data_prefetch of page.
       pageIds.forEach((pageId) => {
-        if (typeof page === 'string' && dataloaderConfig && dataloaderConfig[pageId]) {
+        if (typeof page === 'string' && dataloaderConfig && dataloaderConfig[pageId] && dataloaderConfig[pageId].loader) {
           const staticDataLoaders = [];
-          if (Array.isArray(dataloaderConfig[pageId])) {
-            dataloaderConfig[pageId].forEach(item => {
+          const { loader } = dataloaderConfig[pageId];
+          // 对loader做object类型判断是，只会将对象配置导入到pha配置下
+          if (Array.isArray(loader)) {
+            loader.forEach(item => {
               if (typeof item === 'object') {
                 staticDataLoaders.push(item);
               }
             });
-          } else if (typeof dataloaderConfig[pageId] === 'object') {
+          } else if (typeof loader === 'object') {
             // Single prefetch loader config.
-            staticDataLoaders.push(dataloaderConfig[pageId]);
+            staticDataLoaders.push(loader);
           }
           pageManifest.dataPrefetch = [...(pageManifest.dataPrefetch || []), ...staticDataLoaders];
         }

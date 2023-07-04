@@ -1,6 +1,6 @@
 {
-  "name": "@ice/plugin-pha",
-  "version": "3.0.0",
+  "name": "@ali/plugin-pha",
+  "version": "1.0.0",
   "description": "ice.js plugin for PHA.",
   "license": "MIT",
   "type": "module",
@@ -36,6 +36,6 @@
     "url": "https://github.com/alibaba/ice/tree/master/packages/plugin-pha"
   },
   "publishConfig": {
-    "access": "public"
+    "registry": "https://registry.npm.alibaba-inc.com"
   }
 }
