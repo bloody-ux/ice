@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.0
+- feat: 整合pha dataPrefetch特性，这样子更加合理，因为pha有dataLoader.useAppWorker的配置，而dataPrefetch的支持也会依赖appWorker。之前额外拆分出`@ali/ice-plugin-prefetch`并不科学。
+- refactor: 更合理的app-worker生成逻辑：当存在`app-worker.ts`或者`dataLoader.useAppWorker`有开启的情况下，未来如果有新特性加入的话，可能这个逻辑还会变
+- fix: 修复`appWorker.ejs`中postMessage传参错误的问题，传入的第二个参数必须是当前页面的`key`，而不能是随意的字符串
+- fix: 修复`app-worker.js`生成出来是`esm`模块的问题，导致worker环境报错，当前改为`iife`格式
+- fix: 修复`appWorker.ejs`中错误获取loader的问题，少了一层`config.loader`
+
 ## 1.2.0
 - feat: 支持更加符合常识地生成`app-worker.js`以及更新对应的manifest项更新。原本的逻辑是有了`app-worker.ts`才会生成。现在的逻辑是，只要有依赖`app-worker.js`的场景（比如dataLoader要求使用appWorker），就会生成。
 

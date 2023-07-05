@@ -1,11 +1,33 @@
 {
   "name": "@ali/ice-plugin-pha",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "ice.js plugin for PHA.",
   "license": "MIT",
   "type": "module",
   "main": "./esm/index.js",
-  "types": "./esm/index.d.ts",
+  "exports": {
+    ".": "./esm/index.js",
+    "./runtime": {
+      "types": "./esm/runtime.d.ts",
+      "import": "./esm/runtime.js",
+      "default": "./esm/runtime.js"
+    },
+    "./runtimeWithoutWorker": {
+      "types": "./esm/runtimeWithoutWorker.d.ts",
+      "import": "./esm/runtimeWithoutWorker.js",
+      "default": "./esm/runtimeWithoutWorker.js"
+    },
+    "./types": {
+      "types": "./esm/types.d.ts",
+      "import": "./esm/types.js",
+      "default": "./esm/types.js"
+    },
+    "./esm/types": {
+      "types": "./esm/types.d.ts",
+      "import": "./esm/types.js",
+      "default": "./esm/types.js"
+    }
+  },
   "files": [
     "esm",
     "!esm/**/*.map",
@@ -20,16 +42,20 @@
     "@remix-run/router": "^1.6.1",
     "chalk": "^4.0.0",
     "consola": "^2.15.3",
+    "htmlparser2": "^8.0.1",
     "humps": "^2.0.1",
-    "lodash.clonedeep": "^4.5.0",
-    "htmlparser2": "^8.0.1"
+    "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {
+    "@ali/universal-mtop": "^6.5.8",
     "@ice/app": "^3.2.6",
     "build-scripts": "^2.1.1-0",
     "esbuild": "^0.17.16",
     "webpack": "^5.86.0",
     "webpack-dev-server": "^4.9.2"
+  },
+  "peerDependencies": {
+    "@ali/universal-mtop": "^6.5.8"
   },
   "repository": {
     "type": "http",

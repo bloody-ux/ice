@@ -7,6 +7,7 @@ import generateManifest, { getAppWorkerPath } from './generateManifest.js';
 import createPHAMiddleware from './phaMiddleware.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const PLUGIN_NAME = '@ali/ice-plugin-pha';
 
 export type Compiler = (options: {
   entry: string;
@@ -30,7 +31,7 @@ function getDevPath(url: string): string {
 }
 
 const plugin: Plugin<PluginOptions> = (options) => ({
-  name: '@ice/plugin-pha',
+  name: PLUGIN_NAME,
   setup: ({ onGetConfig, onHook, context, excuteServerEntry, generator, getAllPlugin, createLogger }) => {
     if (!excuteServerEntry) {
       throw new Error('PHA plugin requires excuteServerEntry, Please upgrade @ice/app to latest version (>= 3.1.5).');
@@ -55,6 +56,15 @@ const plugin: Plugin<PluginOptions> = (options) => ({
     let getAppConfig: GetAppConfig;
     let getRoutesConfig: GetRoutesConfig;
     let getDataloaderConfig: GetDataloaderConfig;
+
+    generator.addDataLoaderImport({
+      source: dataLoader.useAppWorker ? `${PLUGIN_NAME}/runtime` : `${PLUGIN_NAME}/runtimeWithoutWorker`,
+      specifier: ['decorator', 'request'],
+      alias: {
+        decorator: 'dataLoaderDecorator',
+        request: 'dataLoaderFetcher',
+      },
+    });
 
     generator.addRouteTypes({
       specifier: ['PageConfig'],
@@ -101,7 +111,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
         await serverCompiler({
           target: 'es2015',
           entryPoints: [entry],
-          format: 'esm',
+          format: 'iife',
           outfile,
           minify,
         }, buildOptions);

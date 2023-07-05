@@ -1,3 +1,15 @@
+declare global {
+  interface Window {
+    pha: {
+      environment?: Object,
+      dataPrefetch?: {
+        call?: Function,
+        getData?: Function,
+      }
+    }
+  }
+}
+
 export type PageHeader = Partial<{
   url: string;
   height: number;

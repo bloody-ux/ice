@@ -7,15 +7,22 @@ addEventListener('beforepageload', async (pageInfos = {}) => {
     key,
   } = pageInfos.detail || {};
   const config = dataloaderConfig[key];
-  if (config) {
-    if (typeof config === 'function') {
-      const res = await config();
-      pha.postMessage(res, '0');
-    } else if (Array.isArray(config)) {
-      config.forEach(async (item, index) => {
+  if (config && config.loader) {
+    const loader = config.loader;
+    if (typeof loader === 'function') {
+      const res = await loader();
+      pha.postMessage({
+        index: 0,
+        data: res,
+      }, key);
+    } else if (Array.isArray(loader)) {
+      loader.forEach(async (item, index) => {
         if (typeof item === 'function') {
           const res = await item();
-          pha.postMessage(res, `$index}`);
+          pha.postMessage({
+            data: res,
+            index,
+          }, key);
         }
       });
     }
