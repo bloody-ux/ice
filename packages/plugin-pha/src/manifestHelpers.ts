@@ -327,7 +327,14 @@ export async function parseManifest(manifest: Manifest, options: ParseOptions): 
     publicPath,
     dataloaderConfig,
     routeManifest,
+    routesConfig,
   } = options;
+
+  // 如果没有显式配置，那么代表所有页面都是pha管控的页面
+  if (!Array.isArray(manifest.routes)) {
+    manifest.routes = Object.keys(routesConfig);
+  }
+
   const { appWorker, tabBar, routes } = manifest;
 
   if (appWorker?.url && !appWorker.url.startsWith('http')) {

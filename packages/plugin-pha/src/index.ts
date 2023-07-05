@@ -18,10 +18,21 @@ export type Compiler = (options: {
 }, buildOptions: Parameters<ServerCompiler>[1]) => Promise<string>;
 
 interface PluginOptions {
+  /**
+   * 是否将页面内容内嵌到manifest中，默认`true`
+   */
   template?: boolean;
+  /**
+   * 是否开启页面资源预取，默认`false`
+   */
   preload?: boolean;
+  /**
+   * dataLoader配置
+   */
   dataLoader?: {
-    // Dynamic of dataLoader config will build the dataLoader into the app worker.
+    /**
+     * 是否使用appWorker来承载动态的loader（函数类型），默认关闭（当前worker的工作有问题）
+     */
     useAppWorker: boolean;
   };
 }
@@ -40,7 +51,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
       template = true,
       preload = false,
       dataLoader = {
-        useAppWorker: true,
+        useAppWorker: false,
       },
     } = options || {};
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.1
+- chore: 由于当前worker链路存在问题，默认禁用`dataLoader.useAppWorker`
+- refactor: 支持自动识别manifest的`routes`，无需开发者显式在app.ts中定义
+
 ## 1.3.0
 - feat: 整合pha dataPrefetch特性，这样子更加合理，因为pha有dataLoader.useAppWorker的配置，而dataPrefetch的支持也会依赖appWorker。之前额外拆分出`@ali/ice-plugin-prefetch`并不科学。
 - refactor: 更合理的app-worker生成逻辑：当存在`app-worker.ts`或者`dataLoader.useAppWorker`有开启的情况下，未来如果有新特性加入的话，可能这个逻辑还会变
