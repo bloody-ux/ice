@@ -100,7 +100,7 @@ export function transformManifestKeys(manifest: Manifest, options?: TransformOpt
       } else {
         data['enable_pull_refresh'] = true;
       }
-    } else if (key === 'requestHeaders') {
+    } else if (key === 'requestHeaders' || key === 'bounces') {
       // Keys of requestHeaders should not be transformed.
       data[transformKey] = value;
     } else if (typeof value === 'object' && !(parentKey === 'dataPrefetch' && (key === 'header' || key === 'data'))) {

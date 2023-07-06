@@ -169,6 +169,7 @@ export type PHAPage = Partial<{
   path: string;
   background_color: string;
   enable_pull_refresh: boolean;
+  bounces: boolean;
   pull_refresh: boolean;
   priority: Priority;
   script: string;
