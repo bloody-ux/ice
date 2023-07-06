@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.3.5
+- fix: 修复`bounces`参数无法设置问题
+
 ## 1.3.1
 - chore: 由于当前worker链路存在问题，默认禁用`dataLoader.useAppWorker`
 - refactor: 支持自动识别manifest的`routes`，无需开发者显式在app.ts中定义
