@@ -81,7 +81,7 @@ const plugin: Plugin<PluginOptions> = (options) => ({
       specifier: ['PageConfig'],
       alias: { PageConfig: 'PHAPageConfig' },
       type: true,
-      source: '@ice/plugin-pha/types',
+      source: '@ali/ice-plugin-pha/types',
     });
 
     // TODO: get route manifest by API.
