@@ -9,6 +9,8 @@ import type { Manifest } from './types.js';
 
 function sendResponse(res: ServerResponse, content: string, mime: string): void {
   res.statusCode = 200;
+  // 禁用缓存
+  res.setHeader('Cache-Control', 'no-store');
   res.setHeader('Content-Type', `${mime}; charset=utf-8`);
   res.end(content);
 }
@@ -71,8 +73,20 @@ const createPHAMiddleware = ({
           return;
         }
       }
+
+      // 将hostname还原为实际页面请求的hostname，而非ip地址
+      const baseUrl = new URL(parseOptions.publicPath);
+      const prefixUrl = new URL(parseOptions.urlPrefix);
+      if (req.hostname !== 'localhost') {
+          baseUrl.hostname = req.hostname;
+          prefixUrl.hostname = req.hostname;
+      }
+
       const phaManifest = await parseManifest(manifest, {
         ...parseOptions,
+        // 由于
+        publicPath: baseUrl.href,
+        urlPrefix: prefixUrl.href,
         routesConfig,
         dataloaderConfig,
       } as ParseOptions);

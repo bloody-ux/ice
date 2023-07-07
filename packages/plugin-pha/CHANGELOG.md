@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.6
+- fix: 非localhost场景下，重写manifest里面页面path为基于域名的地址，而非ip的地址，从而避免在manifest被缓存的情况下，出现ip地址失效后无法访问页面问题
+- chore: 通过Cache-Control: no-store，使得本地manifest返回时，强制其失效
+
 ## 1.3.5
 - fix: 修复`bounces`参数无法设置问题
 
