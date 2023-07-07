@@ -137,6 +137,7 @@ export interface PageConfig extends FrameConfig {
   queryParams?: string;
   pullRefresh?: PullRefresh;
   downgradeUrl?: string;
+  bounces?: boolean;
 }
 
 export type Page = string | PageConfig;
