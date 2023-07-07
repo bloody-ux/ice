@@ -90,6 +90,9 @@ const createPHAMiddleware = ({
         routesConfig,
         dataloaderConfig,
       } as ParseOptions);
+
+      // 对于本地请求，永远取最新的manifest，不能缓存
+      phaManifest.max_age = 0;
       if (!phaManifest?.tab_bar) {
         const multipleManifest = getMultipleManifest(phaManifest);
         const manifestKey = requestPath.replace('-manifest.json', '').replace(/^\//, '');
